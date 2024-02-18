@@ -39,6 +39,13 @@ public class ClientUDP {
                 dos.writeInt(requestId);
                 byte[] requestData = baos.toByteArray();
 
+                // Display request in hexadecimal
+                System.out.println("Request in hexadecimal: ");
+                for (byte b : requestData) {
+                    System.out.printf("%02X ", b);
+                }
+                System.out.println();
+                
                 // Send request to server
                 DatagramPacket requestPacket = new DatagramPacket(requestData, requestData.length, serverAddress, port);
                 socket.send(requestPacket);
