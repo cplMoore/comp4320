@@ -55,6 +55,7 @@ public class ClientUDP {
                 DatagramPacket responsePacket = new DatagramPacket(responseData, responseData.length);
                 socket.receive(responsePacket);
 
+                // Display recieved in hexadecimal
                 System.out.println("Response in hexadecimal: ");
                 for (int i = 0; i < responsePacket.getLength(); i++) {
                     System.out.printf("%02X ", responseData[i]);
@@ -73,6 +74,13 @@ public class ClientUDP {
                 int responseRequestId = dis.readInt();
                 System.out.println("Response: Request ID=" + responseRequestId + ", Result=" + result + ", Error Code=" + errorCode);
                 System.out.println("Round trip time: " + roundTripTime + " ms");
+
+                // Ask user if they want to make another request
+                System.out.print("Do you want to make another request? (yes/no): ");
+                String response = userInput.readLine();
+                if (!response.equalsIgnoreCase("yes")) {
+                    break; // Exit the loop if the user doesn't want to make another request
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
