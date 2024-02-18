@@ -45,7 +45,7 @@ public class ClientUDP {
                     System.out.printf("%02X ", b);
                 }
                 System.out.println();
-                
+
                 // Send request to server
                 DatagramPacket requestPacket = new DatagramPacket(requestData, requestData.length, serverAddress, port);
                 socket.send(requestPacket);
@@ -55,16 +55,16 @@ public class ClientUDP {
                 DatagramPacket responsePacket = new DatagramPacket(responseData, responseData.length);
                 socket.receive(responsePacket);
 
-                // Display recieved in hexadecimal
+                // Measure end time
+                long endTime = System.currentTimeMillis();
+                long roundTripTime = endTime - startTime;
+
+                // Display response in hexadecimal
                 System.out.println("Response in hexadecimal: ");
                 for (int i = 0; i < responsePacket.getLength(); i++) {
                     System.out.printf("%02X ", responseData[i]);
                 }
                 System.out.println();
-
-                // Measure end time
-                long endTime = System.currentTimeMillis();
-                long roundTripTime = endTime - startTime;
 
                 // Process and display response
                 ByteArrayInputStream bais = new ByteArrayInputStream(responseData);
@@ -73,15 +73,21 @@ public class ClientUDP {
                 int errorCode = dis.readInt();
                 int responseRequestId = dis.readInt();
                 System.out.println("Response: Request ID=" + responseRequestId + ", Result=" + result + ", Error Code=" + errorCode);
+                if (errorCode == 0) {
+                    System.out.println("Error Code: Ok");
+                }
+
+                // Display round trip time
                 System.out.println("Round trip time: " + roundTripTime + " ms");
 
-                // Ask user if they want to make another request
+                // Prompt the user for a new request
                 System.out.print("Do you want to make another request? (yes/no): ");
                 String response = userInput.readLine();
                 if (!response.equalsIgnoreCase("yes")) {
                     break; // Exit the loop if the user doesn't want to make another request
                 }
             }
+            socket.close(); // Close the socket when done
         } catch (IOException e) {
             e.printStackTrace();
         }
