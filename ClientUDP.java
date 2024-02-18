@@ -55,6 +55,12 @@ public class ClientUDP {
                 DatagramPacket responsePacket = new DatagramPacket(responseData, responseData.length);
                 socket.receive(responsePacket);
 
+                System.out.println("Response in hexadecimal: ");
+                for (int i = 0; i < responsePacket.getLength(); i++) {
+                    System.out.printf("%02X ", responseData[i]);
+                }
+                System.out.println();
+
                 // Measure end time
                 long endTime = System.currentTimeMillis();
                 long roundTripTime = endTime - startTime;
