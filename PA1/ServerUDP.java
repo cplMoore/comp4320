@@ -81,24 +81,34 @@ public class ServerUDP {
      }
  }
 
-  private static int perform_operation(byte op_code, int op1, int op2) {
-    switch(op_code) {
-      case 0: 
-	return op1 * op2;
-      case 1:
-	return op1 / op2;
-      case 2:
-	return op1 | op2;
-      case 3: 
-	return op1 & op2;
-      case 4:
-	return op1 - op2;
-      case 5:
-	return op1 + op2;
-      default:
-	throw new IllegalArgumentException("Invalid operation code");
+private static int perform_operation(byte op_code, int op1, int op2) {
+     switch (opcode) {
+	case 0: // Multiplication
+        	result = operand1 * operand2;
+		break;
+        case 1: // Division
+        	if (operand2 != 0) {
+                	result = operand1 / operand2;
+                } else {
+                        errorCode = 1; // Division by zero error
+                }
+                break;
+        case 2: // Bitwise OR
+                result = operand1 | operand2;
+                break;
+        case 3: // Bitwise AND
+                 result = operand1 & operand2;
+                 break;
+         case 4: // Subtraction
+                result = operand1 - operand2;
+                break;
+        case 5: // Addition
+                result = operand1 + operand2;
+                break;
+     	 default:
+		throw new IllegalArgumentException("Invalid operation code");
     }
-  }    
+  }       
 
   private static byte[] create_response(byte total_message_length, int result, byte error_code, short request_id) {
     ByteBuffer buffer = ByteBuffer.allocate(8);
