@@ -84,26 +84,26 @@ public class ServerUDP {
 private static int perform_operation(byte op_code, int op1, int op2) {
      switch (opcode) {
 	case 0: // Multiplication
-        	result = operand1 * operand2;
+        	op1 * op2;
 		break;
         case 1: // Division
-        	if (operand2 != 0) {
-                	result = operand1 / operand2;
+        	if (op2 != 0) {
+                	op1 / op2;
                 } else {
                         errorCode = 1; // Division by zero error
                 }
                 break;
         case 2: // Bitwise OR
-                result = operand1 | operand2;
+                op1 | op2;
                 break;
         case 3: // Bitwise AND
-                 result = operand1 & operand2;
+                 op1 & op2;
                  break;
          case 4: // Subtraction
-                result = operand1 - operand2;
+                op1 - op2;
                 break;
         case 5: // Addition
-                result = operand1 + operand2;
+                op1 + op2;
                 break;
      	 default:
 		throw new IllegalArgumentException("Invalid operation code");
